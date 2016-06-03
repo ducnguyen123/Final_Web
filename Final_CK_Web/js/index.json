@@ -1,0 +1,73 @@
+{"Test": [
+	{
+		"Name": "Job",
+		"Status": "Student"
+	},
+	{
+		"Name": "Nation",
+		"Status": "Vietnam"
+	},
+	{
+		"Name": "Major",
+		"Status": "Software Engineering"
+	},
+	{
+		"Name": "Education",
+		"Status": "University of Science"
+	}
+],
+
+"Background": [
+	{
+		"Content1": "My name is Nguyen Minh Duc.Currently,i learning at University of Science.My major is Software Engineering.Experienced in community activities, programming."
+		
+		
+	}
+],
+"Promos": [ 
+	{
+		"Time": "30 Days return",
+		"Cost": "Free shipping",
+		"Security": "Secure payments",
+		"Gift": "New products"
+	}
+],
+"Experience": [
+	{
+		"Posittion": "Commissioner",
+		"Address": "Student at University of Science",
+		"Date": "September 2013 - Present (2 year 9 months)",
+		"Description": "I have around 1 years at this location. I have organized a number of activities for you and above demand. I regret the incident, what I have not done well in the period of work.I'm glad I had the interesting experience, learned a lot of things and have friends working together."
+	}
+],
+"Products": [
+	{
+		"Name": "Latest Products",
+		"Cart": "Add to cart",
+		"Detail": "See details",
+		
+		"Product1": "Sony Smart TV - 2015",
+		"Sale1": "$700.000",
+		"Value1": "$800.000"
+	}
+],
+"Carousel": [
+		{
+			"Description": "Learn more",
+			"Contain1": "We are awesome",
+			"P1": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consequuntur, dolorem, excepturi. Dolore aliquam quibusdam ut quae iure vero exercitationem ratione!",
+			"P11": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi ab molestiae minus reiciendis! Pariatur ab rerum, sapiente ex nostrum laudantium.",
+			
+			"Contain2": "We are great",
+			
+			"P2": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Saepe aspernatur, dolorum harum molestias tempora deserunt voluptas possimus quos eveniet, vitae voluptatem accusantium atque deleniti inventore. Enim quam placeat expedita! Quibusdam!",
+			
+			"Contain3": "We are superb",
+			"P3": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolores, eius?",
+			"P33": "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Deleniti voluptates necessitatibus dicta recusandae quae amet nobis sapiente explicabo voluptatibus rerum nihil quas saepe, tempore error odio quam obcaecati suscipit sequi."
+
+		}
+	]
+
+}
+
