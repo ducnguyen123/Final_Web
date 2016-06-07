@@ -4,7 +4,7 @@ var myapp = angular.module("IndexApp", ["firebase"]);
 myapp.controller('singleProductControler', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
     {
         var ref = new Firebase("https://happyteam.firebaseio.com/");
-
+        $scope.footer = $firebaseArray(ref.child('Footer'));
         $scope.products = JSON.parse(localStorage.products);
         var para = window.location.search.replace("?", "");
 

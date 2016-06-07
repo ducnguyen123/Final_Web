@@ -6,7 +6,12 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
         var ref = new Firebase("https://happyteam.firebaseio.com/");
         $scope.carousels = $firebaseArray(ref.child('Carousel'));
         $scope.promos = $firebaseArray(ref.child('Promos'));
-        var ref = new Firebase("https://happyteam.firebaseio.com/");
+        $scope.footer = $firebaseArray(ref.child('Footer'));
+		
+		$scope.LoginDN = true;
+		$scope.LoginDX = false;
+		
+		
         //localStorage.users = null;
         if (localStorage.products)
             $scope.products = JSON.parse(localStorage.products);
@@ -15,10 +20,19 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
                 $scope.products = $firebaseArray(Products);
             });
         var user = localStorage.users;
+		
         var u;
-        if (user)
+        if (user != 'null')
         {
-
+			if (user == 'minhduc074@gmail.com' || user == 'heocondangyeu0@gmail.com')
+            {
+				$scope.admin = true; 
+            } else
+                $scope.admin = false;
+			
+			$scope.LoginDN = true;
+			$scope.LoginDX = true;
+			
             u = user;
             u = u.replace('@', '');
             u = u.replace('.', '');

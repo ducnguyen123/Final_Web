@@ -3,6 +3,8 @@ var App = angular.module('IndexApp', ['firebase']);
 
 App.factory('ServiceSave', ['$firebaseArray', function ($firebaseArray)
     {
+		localStorage.users = null;
+		
         var ref = new Firebase("https://happyteam.firebaseio.com/");
         return {
             getProductr: function () {
@@ -59,6 +61,8 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
     {
         var self = $scope;
         var ref = new Firebase("https://happyteam.firebaseio.com/");
+		$scope.LoginDN = true;
+		$scope.LoginDX = false;
 
         $scope.products = ServiceSave.getProductr();
 
@@ -87,7 +91,7 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
             var ref = new Firebase("https://happyteam.firebaseio.com/");
             localStorage.products = JSON.stringify($scope.products);
             ref.authWithPassword({
-                email: $scope.username,
+                email: $scope.email,
                 password: $scope.password
             }, function (error, authData) {
                 if (error) {
@@ -98,6 +102,8 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
                     localStorage.users = authData.password.email;
                     localStorage.products = JSON.stringify($scope.products);
                     location.href = "index.html";
+					localStorage.LoginDN = false;
+					localStorage.LoginDX = true;
                 }
             });
         }
@@ -106,7 +112,8 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
 			var firebaseObj = new Firebase("https://happyteam.firebaseio.com/");
             firebaseObj.unauth();
             localStorage.users = null;
-            location.href = "index.html";
+            $scope.LoginDN = true;
+			$scope.LoginDX = false;
             location.reload();
         }
 
@@ -120,6 +127,8 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
 					 localStorage.users = authData.facebook.displayName;
                     localStorage.listCarts = JSON.stringify($scope.listCarts);
                     localStorage.products = JSON.stringify($scope.products);
+					localStorage.LoginDN = false;
+					localStorage.LoginDX = true;
 				}
 				} , {
 					remember: "sessionOnly",
@@ -138,6 +147,8 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
 				 localStorage.users = authData.google.displayName;
                     localStorage.listCarts = JSON.stringify($scope.listCarts);
                     localStorage.products = JSON.stringify($scope.products);
+					localStorage.LoginDN = false;
+					localStorage.LoginDX = true;
 			}
 			} , {
 				remember: "sessionOnly",

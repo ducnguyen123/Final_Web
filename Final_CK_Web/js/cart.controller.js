@@ -4,6 +4,7 @@ var myapp = angular.module("IndexApp", ["firebase"]);
 myapp.controller('cartController', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
     {
         var ref = new Firebase("https://happyteam.firebaseio.com/");
+        $scope.footer = $firebaseArray(ref.child('Footer'));
         //localStorage.users = null;
         if (localStorage.products)
             $scope.products = JSON.parse(localStorage.products);
