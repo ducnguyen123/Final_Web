@@ -1,11 +1,8 @@
 var myapp = angular.module("IndexApp", ["firebase"]);
 
 
-myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
+myapp.controller('shopController', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
     {
-        var ref = new Firebase("https://happyteam.firebaseio.com/");
-        $scope.carousels = $firebaseArray(ref.child('Carousel'));
-        $scope.promos = $firebaseArray(ref.child('Promos'));
         var ref = new Firebase("https://happyteam.firebaseio.com/");
         //localStorage.users = null;
         if (localStorage.products)
@@ -54,8 +51,6 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
             $scope.author.username = 'Đăng nhập';
             $scope.author.link = 'login.html';
         }
-        
-        
 
 
         $scope.addToCart = function (id)
@@ -86,6 +81,7 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
             }
 
             ref.child('ListCarts/' + u).update(an);
+
         }
 
     }]

@@ -1,11 +1,8 @@
 var myapp = angular.module("IndexApp", ["firebase"]);
 
 
-myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
+myapp.controller('cartController', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
     {
-        var ref = new Firebase("https://happyteam.firebaseio.com/");
-        $scope.carousels = $firebaseArray(ref.child('Carousel'));
-        $scope.promos = $firebaseArray(ref.child('Promos'));
         var ref = new Firebase("https://happyteam.firebaseio.com/");
         //localStorage.users = null;
         if (localStorage.products)
@@ -29,6 +26,16 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
                 for (var i = 0; i < list.length; i++)
                 {
                     $scope.listCart.listCart.push(list[i].$value);
+                }
+                $scope.list = new Array();
+
+                for (var i = 0; i < $scope.listCart.listCart.length; i++)
+                {
+                    for (var j = 0; j < $scope.products.length; j++)
+                    {
+                        if ($scope.listCart.listCart[i] == $scope.products[j].id)
+                            $scope.list.push($scope.products[j]);
+                    }
                 }
             });
             $firebaseObject(ref.child('ListCarts/' + u + '/totalPrice')).$loaded().then(function (price) {
@@ -54,8 +61,6 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
             $scope.author.username = 'Đăng nhập';
             $scope.author.link = 'login.html';
         }
-        
-        
 
 
         $scope.addToCart = function (id)
@@ -86,7 +91,10 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
             }
 
             ref.child('ListCarts/' + u).update(an);
+
         }
+
+
 
     }]
         );

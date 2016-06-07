@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="css/responsive.css">
 <link rel="stylesheet" href="css/signin.css">
-
+<link rel="stylesheet" href="css/bootstrap-social.css">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>
@@ -118,7 +118,15 @@
                     <div style="margin-top:10px" class="form-group">
                         <!-- Button -->
                         <div class="col-sm-12 controls">
-                            <a id="btn-login" href="#" class="btn btn-success" ng-click="loginUp()">Login  </a>
+                            <a style="float:left;" id="btn-login" href="#" class="btn btn-success" ng-click="loginUp()">Login  </a>
+							<a class="btn btn-block btn-social btn-facebook" ng-click="loginFb()"
+							style="width: 190px; float:left; margin-left: 10px;" >
+								<span class="fa fa-facebook"></span> Sign in with Facebook
+							</a>
+							<a class="btn btn-block btn-social btn-google" ng-click="loginGg()"
+							style="width: 190px; float:left; margin-left: 10px; margin-top:0px;">
+								<span class="fa fa-google"></span> Sign in with Google
+							</a>
 
                         </div>
                     </div>

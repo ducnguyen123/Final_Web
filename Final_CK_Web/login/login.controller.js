@@ -1,126 +1,143 @@
 var App = angular.module('IndexApp', ['firebase']);
-App.controller('IndexCtr', function($scope, $firebaseObject){
-	var self = $scope;
-	var ref = new Firebase("https://happyteam.firebaseio.com/");
-	
-	
-	self.signUp = function() {
-		var ref = new Firebase("https://happyteam.firebaseio.com/");
-	
-    ref.createUser({
-    	email: $scope.email,
-    	password: $scope.password
-    }, function(error, userData) {
-    	if (error) {
-    		console.log("Error creating user: ", error);
-    	} else {
-    		console.log("Successfully created user account with uid: ", userData.uid);
-    		console.log(userData);
-    	}
-    });
-		
-	}
 
-	self.loginUp = function () {
-		var ref = new Firebase("https://happyteam.firebaseio.com/");
-		ref.authWithPassword({
-			email    : $scope.username,
-			password : $scope.password
-		}, function(error, authData) {
+
+App.factory('ServiceSave', ['$firebaseArray', function ($firebaseArray)
+    {
+        var ref = new Firebase("https://happyteam.firebaseio.com/");
+        return {
+            getProductr: function () {
+                return $firebaseArray(ref.child('Products'));
+            },
+            getCurentUserr: function () {
+                if (!localStorage.users) {
+                }
+                return localStorage.users;
+            },
+            setCurentUserr: function (user) {
+                localStorage.users = user;
+            },
+            getListCartr: function (user) {
+                var listCarts = $firebaseArray(ref.child('ListCarts'));
+                var listCart;
+                for (var i = 0; i < listCarts.length; i++)
+                {
+                    if (listCarts[i].username == user)
+                        listCart = listCarts[i].listCart;
+                }
+
+
+                if (!listCart) {
+                    listCart = JSON.stringify([]);
+                }
+
+                return JSON.parse(listCart);
+            },
+            setListCartr: function (user, listCart) {
+                var listCarts = $firebaseArray(ref.child('ListCarts'));
+                var f;
+                var s = {
+                    username: user,
+                    listCart: listCart
+                }
+                for (var i = 0; i < listCarts.length; i++)
+                {
+                    if (listCarts[i].username == user)
+                    {
+                        listCarts[i].s;
+                        f = true;
+                    }
+                }
+                if (!f)
+                    listCarts.push(s);
+                ref.child('ListCarts').update(listCarts);
+            }
+        };
+    }
+]);
+
+App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSave)
+    {
+        var self = $scope;
+        var ref = new Firebase("https://happyteam.firebaseio.com/");
+
+        $scope.products = ServiceSave.getProductr();
+
+        self.signUp = function () {
+            var ref = new Firebase("https://happyteam.firebaseio.com/");
+
+            localStorage.products = JSON.stringify($scope.products);
+            ref.createUser({
+                email: $scope.email,
+                password: $scope.password
+            }, function (error, userData) {
+                if (error) {
+                    console.log("Error creating user: ", error);
+                } else {
+                    console.log("Successfully created user account with uid: ", userData.uid);
+                    console.log(userData);
+                    localStorage.users = userData.password.email;
+
+                    location.href = "index.html";
+                }
+            });
+
+        }
+
+        self.loginUp = function () {
+            var ref = new Firebase("https://happyteam.firebaseio.com/");
+            //$scope.listCarts = ServiceSave.getListCartr($scope.username);
+            localStorage.listCarts = JSON.stringify($scope.listCarts);
+            localStorage.products = JSON.stringify($scope.products);
+            ref.authWithPassword({
+                email: $scope.username,
+                password: $scope.password
+            }, function (error, authData) {
+                if (error) {
+                    console.log("Login Failed!", error);
+                } else {
+
+                    console.log("Authenticated successfully with payload:", authData);
+                    localStorage.users = authData.password.email;
+                    localStorage.listCarts = JSON.stringify($scope.listCarts);
+                    localStorage.products = JSON.stringify($scope.products);
+                    location.href = "index.html";
+                }
+            });
+        }
+
+        self.logoutUp = function () {
+            $scope.$unauth();
+            localStorage.users = null;
+            location.href = "index.html";
+            location.reload();
+        }
+
+        self.loginFb = function () {
+            var ref = new Firebase("https://happyteam.firebaseio.com");
+				ref.authWithOAuthPopup("facebook", function(error, authData) {
+				if (error) {
+					console.log("Login Failed!", error);
+				} else {
+					console.log("Authenticated successfully with payload:", authData);
+				}
+				} , {
+					remember: "sessionOnly",
+					scope: "email,user_likes"
+				});	
+
+        }
+
+        self.loginGg = function () {
+            var ref = new Firebase("https://happyteam.firebaseio.com");
+			ref.authWithOAuthPopup("google", function(error, authData) {
 			if (error) {
 				console.log("Login Failed!", error);
 			} else {
-				
 				console.log("Authenticated successfully with payload:", authData);
-				location.href="index.html";
 			}
-		});
-	}
-
-	self.logoutUp = function () {
-		$scope.$unauth();
-        location.reload();
-	}
-	
-	self.loginFb = function(){
-		var provider = new firebase.auth.FacebookAuthProvider();
-		provider.addScope('user_birthday');
-		firebase.auth().signInWithPopup(provider).then(function(result) {
-		// This gives you a Facebook Access Token. You can use it to access the Facebook API.
-		var token = result.credential.accessToken;
-		// The signed-in user info.
-		var user = result.user;
-		// ...
-		}).catch(function(error) {
-		// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		// The email of the user's account used.
-		var email = error.email;
-		// The firebase.auth.AuthCredential type that was used.
-		var credential = error.credential;
-		// ...
-		
-		});
-		firebase.auth().signInWithRedirect(provider);
-		firebase.auth().getRedirectResult().then(function(result) {
-		if (result.credential) {
-			// This gives you a Facebook Access Token. You can use it to access the Facebook API.
-			var token = result.credential.accessToken;
-			// ...
-		}
-		// The signed-in user info.
-		var user = result.user;
-		}).catch(function(error) {
-		// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		// The email of the user's account used.
-		var email = error.email;
-		// The firebase.auth.AuthCredential type that was used.
-		var credential = error.credential;
-		// ...
-		});
-		
-	}
-	
-	self.loginGg = function(){
-		var provider = new firebase.auth.GoogleAuthProvider();
-		provider.addScope('https://www.googleapis.com/auth/plus.login');
-		firebase.auth().signInWithPopup(provider).then(function(result) {
-		// This gives you a Google Access Token. You can use it to access the Google API.
-		var token = result.credential.accessToken;
-		// The signed-in user info.
-		var user = result.user;
-		// ...
-		}).catch(function(error) {
-		// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		// The email of the user's account used.
-		var email = error.email;
-		// The firebase.auth.AuthCredential type that was used.
-		var credential = error.credential;
-		// ...
-		});
-		firebase.auth().signInWithRedirect(provider);
-		firebase.auth().getRedirectResult().then(function(result) {
-		if (result.credential) {
-			// This gives you a Google Access Token. You can use it to access the Google API.
-			var token = result.credential.accessToken;
-			// ...
-		}
-		// The signed-in user info.
-		var user = result.user;
-		}).catch(function(error) {
-		// Handle Errors here.
-		var errorCode = error.code;
-		var errorMessage = error.message;
-		// The email of the user's account used.
-		var email = error.email;
-		// The firebase.auth.AuthCredential type that was used.
-		var credential = error.credential;
-		// ...
-		});
-	}
-});
+			} , {
+				remember: "sessionOnly",
+				scope: "email"
+			});
+        }
+    }]);
