@@ -91,9 +91,49 @@ myapp.controller('cartController', ['$scope', '$firebaseArray', '$firebaseObject
             }
 
             ref.child('ListCarts/' + u).update(an);
-
         }
 
+        $scope.removeItem = function (id)
+        {
+            for (var i = 0; i < $scope.listCart.listCart.length; i++)
+            {
+                if (id == $scope.listCart.listCart[i])
+                {
+                    $scope.listCart.listCart.splice(i, 1);
+                    for (var i = 0; i < $scope.products.length; i++)
+                    {
+                        if ($scope.products[i].id == id)
+                        {
+                            $scope.listCart.totalPrice -= $scope.products[i].sellPrice;
+                        }
+                    }
+                    var an = {
+                        listCart: $scope.listCart.listCart,
+                        totalPrice: $scope.listCart.totalPrice,
+                        username: $scope.listCart.username
+                    }
+
+                    ref.child('ListCarts/' + u).update(an);
+                    location.href = "cart.html";
+                }
+            }
+        }
+        $scope.Search = function ()
+        {
+
+            var f;
+            for (var i = 0; i < $scope.products.length; i++)
+            {
+                if ($scope.products[i].name.toLowerCase().indexOf($scope.name.toLowerCase()) >= 0)
+                {
+                    location.href = "single-product.html?id=" + $scope.products[i].id.toString();;
+                    f = true;
+                }
+            }
+            if (!f)
+                location.href = "single-product.html?id=" + $scope.products[0].id.toString();;
+
+        }
 
 
     }]

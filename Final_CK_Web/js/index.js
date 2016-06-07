@@ -11,7 +11,9 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
         if (localStorage.products)
             $scope.products = JSON.parse(localStorage.products);
         else
-            $scope.products = $firebaseArray(ref.child('Products'));
+            $firebaseArray(ref.child('Products')).$loaded().then(function (Products) {
+                $scope.products = $firebaseArray(Products);
+            });
         var user = localStorage.users;
         var u;
         if (user)
@@ -54,14 +56,20 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
             $scope.author.username = 'Đăng nhập';
             $scope.author.link = 'login.html';
         }
-        
-        
+
+        $scope.logoutUp = function () {
+            var firebaseObj = new Firebase("https://happyteam.firebaseio.com/");
+            firebaseObj.unauth();
+            localStorage.users = null;
+            location.href = "index.html";
+            location.reload();
+        }
 
 
         $scope.addToCart = function (id)
         {
             if ($scope.author.username == 'Đăng nhập')
-                location.href('login.html');
+                location.href = 'login.html';
             if ($scope.listCart.length == 0)
             {
                 $scope.listCart = {

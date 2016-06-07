@@ -85,8 +85,6 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
 
         self.loginUp = function () {
             var ref = new Firebase("https://happyteam.firebaseio.com/");
-            //$scope.listCarts = ServiceSave.getListCartr($scope.username);
-            localStorage.listCarts = JSON.stringify($scope.listCarts);
             localStorage.products = JSON.stringify($scope.products);
             ref.authWithPassword({
                 email: $scope.username,
@@ -98,15 +96,15 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
 
                     console.log("Authenticated successfully with payload:", authData);
                     localStorage.users = authData.password.email;
-                    localStorage.listCarts = JSON.stringify($scope.listCarts);
                     localStorage.products = JSON.stringify($scope.products);
                     location.href = "index.html";
                 }
             });
         }
 
-        self.logoutUp = function () {
-            $scope.$unauth();
+        self.logout = function () {
+			var firebaseObj = new Firebase("https://happyteam.firebaseio.com/");
+            firebaseObj.unauth();
             localStorage.users = null;
             location.href = "index.html";
             location.reload();
@@ -119,6 +117,9 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
 					console.log("Login Failed!", error);
 				} else {
 					console.log("Authenticated successfully with payload:", authData);
+					 localStorage.users = authData.facebook.displayName;
+                    localStorage.listCarts = JSON.stringify($scope.listCarts);
+                    localStorage.products = JSON.stringify($scope.products);
 				}
 				} , {
 					remember: "sessionOnly",
@@ -134,6 +135,9 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
 				console.log("Login Failed!", error);
 			} else {
 				console.log("Authenticated successfully with payload:", authData);
+				 localStorage.users = authData.google.displayName;
+                    localStorage.listCarts = JSON.stringify($scope.listCarts);
+                    localStorage.products = JSON.stringify($scope.products);
 			}
 			} , {
 				remember: "sessionOnly",

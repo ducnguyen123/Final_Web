@@ -158,52 +158,29 @@
                     <div class="col-md-4">
                         <div class="single-sidebar">
                             <h2 class="sidebar-title">Search Products</h2>
-                            <form action="">
-                                <input type="text" placeholder="Search products...">
-                                <input type="submit" value="Search">
+                            <form>
+                                <input type="text" placeholder="Search products..." ng-model="name">
+                                <input type="submit" value="Search" ng-click="Search()">
                             </form>
                         </div>
 
                         <div class="single-sidebar">
                             <h2 class="sidebar-title">Products</h2>
-                            <div class="thubmnail-recent">
-                                <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                                <h2><a href="">Sony Smart TV - 2015</a></h2>
+                            
+                            <div class="thubmnail-recent" ng-repeat="p in products">
+                                <img src="{{p.image}}" class="recent-thumb" alt="">
+                                <h2><a href="single-product.html?id={{p.id}}">{{p.name}}</a></h2>
                                 <div class="product-sidebar-price">
-                                    <ins>$700.00</ins> <del>$800.00</del>
+                                    <ins>${{p.sellPrice}}</ins> <del>${{p.price}}</del>
                                 </div>                             
                             </div>
-                            <div class="thubmnail-recent">
-                                <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                                <h2><a href="">Sony Smart TV - 2015</a></h2>
-                                <div class="product-sidebar-price">
-                                    <ins>$700.00</ins> <del>$800.00</del>
-                                </div>                             
-                            </div>
-                            <div class="thubmnail-recent">
-                                <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                                <h2><a href="">Sony Smart TV - 2015</a></h2>
-                                <div class="product-sidebar-price">
-                                    <ins>$700.00</ins> <del>$800.00</del>
-                                </div>                             
-                            </div>
-                            <div class="thubmnail-recent">
-                                <img src="img/product-thumb-1.jpg" class="recent-thumb" alt="">
-                                <h2><a href="">Sony Smart TV - 2015</a></h2>
-                                <div class="product-sidebar-price">
-                                    <ins>$700.00</ins> <del>$800.00</del>
-                                </div>                             
-                            </div>
+                            
                         </div>
 
                         <div class="single-sidebar">
                             <h2 class="sidebar-title">Recent Posts</h2>
-                            <ul>
-                                <li><a href="">Sony Smart TV - 2015</a></li>
-                                <li><a href="">Sony Smart TV - 2015</a></li>
-                                <li><a href="">Sony Smart TV - 2015</a></li>
-                                <li><a href="">Sony Smart TV - 2015</a></li>
-                                <li><a href="">Sony Smart TV - 2015</a></li>
+                            <ul ng-repeat="p in products">
+                                <li><a href="single-product.html?id={{p.id}}">{{p.name}}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -224,10 +201,7 @@
                                         </div>
 
                                         <div class="product-gallery">
-                                            <img src="img/product-thumb-1.jpg" alt="">
-                                            <img src="img/product-thumb-2.jpg" alt="">
-                                            <img src="img/product-thumb-3.jpg" alt="">
-                                            <img src="img/product-thumb-4.jpg" alt="">
+                                            <img src="{{product.image}}" alt="">
                                         </div>
                                     </div>
                                 </div>

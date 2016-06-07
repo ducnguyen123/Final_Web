@@ -10,13 +10,18 @@ myapp.controller('singleProductControler', ['$scope', '$firebaseArray', '$fireba
 
         var id = para.replace('id=', '');
 
-
+        var f;
         for (var i = 0; i < $scope.products.length; i++)
         {
             if ($scope.products[i].id == id)
             {
                 $scope.product = $scope.products[i];
+                f = true;
             }
+        }
+        if(!f)
+        {
+             $scope.product = $scope.products[0];
         }
 
         var user = localStorage.users;
@@ -86,8 +91,23 @@ myapp.controller('singleProductControler', ['$scope', '$firebaseArray', '$fireba
             }
 
             ref.child('ListCarts/' + u).update(an);
+        }
+        
+        $scope.Search = function ()
+        {
+
+            var f;
+            for (var i = 0; i < $scope.products.length; i++)
+            {
+                if ($scope.products[i].name.toLowerCase().indexOf($scope.name.toLowerCase()) >= 0)
+                {
+                    location.href = "single-product.html?id=" + $scope.products[i].id.toString();;
+                    f = true;
+                }
+            }
+            if (!f)
+                location.href = "single-product.html?id=" + $scope.products[0].id.toString();;
 
         }
-
     }]
         );
