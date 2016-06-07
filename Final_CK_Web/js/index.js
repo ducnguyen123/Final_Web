@@ -6,7 +6,7 @@ myapp.controller('IndexCtr', ['$scope', '$firebaseArray', '$firebaseObject', fun
         var ref = new Firebase("https://happyteam.firebaseio.com/");
         $scope.carousels = $firebaseArray(ref.child('Carousel'));
         $scope.promos = $firebaseArray(ref.child('Promos'));
-        $scope.footer = $firebaseArray(ref.child('Footer'));
+        var ref = new Firebase("https://happyteam.firebaseio.com/");
 		
 		$scope.LoginDN = true;
 		$scope.LoginDX = false;

@@ -40,7 +40,23 @@
 </head>
 <body ng-controller="IndexCtr">
 
-	<div ng-include="'includes/header.htm'"></div>
+	<div class="header-area">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="user-menu">
+						<ul>							
+							<li><a href="cart.html"><i class="fa fa-user"></i> My
+									Cart</a></li>
+							<li><a href="checkout.html"><i class="fa fa-user"></i>
+									Checkout</a></li>
+							<li><a href="login.html"><i class="fa fa-user"></i> Login</a></li>
+						</ul>
+					</div>
+				</div>				
+			</div>
+		</div>
+	</div>
 	<!-- End header area -->
 
 	<div class="site-branding-area">
@@ -161,7 +177,26 @@
 	<br>
 	<br>
 
-	<div ng-include="'includes/footer_bottom.htm'"></div>
+	<div class="footer-bottom-area"  >
+		<div class="container">
+			<div class="row">
+				<div class="col-md-8">
+					<div class="copyright">
+						<p>
+							&copy; 2015 eElectronics. All Rights Reserved. Coded with 
+						</p>
+					</div>
+				</div>
+
+				<div class="col-md-4">
+					<div class="footer-card-icon">
+						<i class="fa fa-cc-discover"></i> <i class="fa fa-cc-mastercard"></i>
+						<i class="fa fa-cc-paypal"></i> <i class="fa fa-cc-visa"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<!-- End footer bottom area -->
 	<script src="bower_components/angular/angular.js"></script>
 	<script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
