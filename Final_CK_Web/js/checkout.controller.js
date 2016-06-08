@@ -1,13 +1,13 @@
 var myapp = angular.module("IndexApp", ["firebase"]);
 
 
-myapp.controller('cartController', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
+myapp.controller('checkOutController', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
     {
         $scope.ahome = false;
         $scope.ashop = false;
         $scope.asproduct = false;
-        $scope.acart = "active";
-        $scope.acheckout = false;
+        $scope.acart = false;
+        $scope.acheckout = "active";
         $scope.aaproduct = false;
         var ref = new Firebase("https://happyteam.firebaseio.com/");
         $scope.footer = $firebaseArray(ref.child('Footer'));
@@ -191,6 +191,30 @@ myapp.controller('cartController', ['$scope', '$firebaseArray', '$firebaseObject
         $scope.checkout = function ()
         {
             location.href = "checkout.html";
+            var a;
+        }
+
+        var xmlhttp = new XMLHttpRequest();
+        var url = "js/1.json";
+
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var myArr = JSON.parse(xmlhttp.responseText);
+                myFunction(myArr);
+            }
+        };
+        xmlhttp.open("GET", url, true);
+        xmlhttp.send();
+
+        function myFunction(arr) {
+            var out = "";
+            var i;
+            for (i = 0; i < arr.A.length; i++) {
+                out += '<option value="' + arr.A[i].id + '">' +
+                        arr.A[i].name + '</option>';
+            }
+            document.getElementById("shipping_country").innerHTML = out;
+            document.getElementById("billing_country").innerHTML = out;
         }
 
     }]

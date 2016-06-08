@@ -3,8 +3,8 @@ var App = angular.module('IndexApp', ['firebase']);
 
 App.factory('ServiceSave', ['$firebaseArray', function ($firebaseArray)
     {
-		localStorage.users = null;
-		
+        localStorage.users = null;
+
         var ref = new Firebase("https://happyteam.firebaseio.com/");
         return {
             getProductr: function () {
@@ -61,8 +61,8 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
     {
         var self = $scope;
         var ref = new Firebase("https://happyteam.firebaseio.com/");
-		$scope.LoginDN = true;
-		$scope.LoginDX = false;
+        $scope.LoginDN = true;
+        $scope.LoginDX = false;
 
         $scope.products = ServiceSave.getProductr();
 
@@ -102,57 +102,57 @@ App.controller('IndexCtr', ['$scope', 'ServiceSave', function ($scope, ServiceSa
                     localStorage.users = authData.password.email;
                     localStorage.products = JSON.stringify($scope.products);
                     location.href = "index.html";
-					localStorage.LoginDN = false;
-					localStorage.LoginDX = true;
+                    localStorage.LoginDN = false;
+                    localStorage.LoginDX = true;
                 }
             });
         }
 
         self.logout = function () {
-			var firebaseObj = new Firebase("https://happyteam.firebaseio.com/");
+            var firebaseObj = new Firebase("https://happyteam.firebaseio.com/");
             firebaseObj.unauth();
             localStorage.users = null;
             $scope.LoginDN = true;
-			$scope.LoginDX = false;
+            $scope.LoginDX = false;
             location.reload();
         }
 
         self.loginFb = function () {
             var ref = new Firebase("https://happyteam.firebaseio.com");
-				ref.authWithOAuthPopup("facebook", function(error, authData) {
-				if (error) {
-					console.log("Login Failed!", error);
-				} else {
-					console.log("Authenticated successfully with payload:", authData);
-					 localStorage.users = authData.facebook.displayName;
-                    localStorage.listCarts = JSON.stringify($scope.listCarts);
+            ref.authWithOAuthPopup("facebook", function (error, authData) {
+                if (error) {
+                    console.log("Login Failed!", error);
+                } else {
+                    console.log("Authenticated successfully with payload:", authData);
+                    localStorage.users = authData.facebook.displayName;
                     localStorage.products = JSON.stringify($scope.products);
-					localStorage.LoginDN = false;
-					localStorage.LoginDX = true;
-				}
-				} , {
-					remember: "sessionOnly",
-					scope: "email,user_likes"
-				});	
+                    location.href = "index.html";
+                    localStorage.LoginDN = false;
+                    localStorage.LoginDX = true;
+                }
+            }, {
+                remember: "sessionOnly",
+                scope: "email,user_likes"
+            });
 
         }
 
         self.loginGg = function () {
             var ref = new Firebase("https://happyteam.firebaseio.com");
-			ref.authWithOAuthPopup("google", function(error, authData) {
-			if (error) {
-				console.log("Login Failed!", error);
-			} else {
-				console.log("Authenticated successfully with payload:", authData);
-				 localStorage.users = authData.google.displayName;
-                    localStorage.listCarts = JSON.stringify($scope.listCarts);
+            ref.authWithOAuthPopup("google", function (error, authData) {
+                if (error) {
+                    console.log("Login Failed!", error);
+                } else {
+                    console.log("Authenticated successfully with payload:", authData);
+                    localStorage.users = authData.google.displayName;
                     localStorage.products = JSON.stringify($scope.products);
-					localStorage.LoginDN = false;
-					localStorage.LoginDX = true;
-			}
-			} , {
-				remember: "sessionOnly",
-				scope: "email"
-			});
+                    location.href = "index.html";
+                    localStorage.LoginDN = false;
+                    localStorage.LoginDX = true;
+                }
+            }, {
+                remember: "sessionOnly",
+                scope: "email"
+            });
         }
     }]);

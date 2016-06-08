@@ -3,18 +3,27 @@ var myapp = angular.module("IndexApp", ["firebase"]);
 
 myapp.controller('addProductController', ['$scope', '$firebaseArray', '$firebaseObject', function ($scope, $firebaseArray, $firebaseObject)
     {
+        $scope.ahome = false;
+        $scope.ashop = false;
+        $scope.asproduct = false;
+        $scope.acart = false;
+        $scope.acheckout = false;
+        $scope.aaproduct = "active";
+        
         var ref = new Firebase("https://happyteam.firebaseio.com/");
+		$scope.footer = $firebaseArray(ref.child('Footer'));
         //localStorage.users = null;
         if (localStorage.products)
             $scope.products = JSON.parse(localStorage.products);
         else
             $firebaseArray(ref.child('Products')).$loaded().then(function (Products) {
                 $scope.products = Products;
+                localStorage.products = JSON.stringify($scope.products);
             });
         var user = localStorage.users;
         if (user)
         {
-            if (user == 'minhduc074@gmail.com' || user == 'heocondangyeu0@gmail.com')
+            if (user == 'minhduc074@gmail.com' || user == 'heocondangyeu0@gmail.com' || user == 'hieuliemcs20@gmail.com')
             {
 
             } else
